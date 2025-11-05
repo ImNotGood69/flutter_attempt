@@ -1,45 +1,46 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const App());
-}
+void main() {}
 
-class App extends StatelessWidget {
-  const App({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'sandwich shop app',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Sandwich Counter')),
+//   runApp(const App());
+// }
 
-        // removed the Container; show three OrderItemDisplay widgets
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              OrderItemDisplay(3, 'BLT'), // left
-              OrderItemDisplay(5, 'club'), // center
-              OrderItemDisplay(2, 'veggie'), // right
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class App extends StatelessWidget {
+//   const App({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'sandwich shop app',
+//       home: Scaffold(
+//         appBar: AppBar(title: const Text('Sandwich Counter')),
 
-class OrderItemDisplay extends StatelessWidget {
-  final String itemType;
-  final int quantity;
-  const OrderItemDisplay(this.quantity, this.itemType, {super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
-  }
-}
+//         // removed the Container; show three OrderItemDisplay widgets
+//         body: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: const [
+//               OrderItemDisplay(3, 'BLT'), // left
+//               OrderItemDisplay(5, 'club'), // center
+//               OrderItemDisplay(2, 'veggie'), // right
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class OrderItemDisplay extends StatelessWidget {
+//   final String itemType;
+//   final int quantity;
+//   const OrderItemDisplay(this.quantity, this.itemType, {super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
+//   }
+// }
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
