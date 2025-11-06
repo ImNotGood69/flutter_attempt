@@ -16,7 +16,6 @@ class App extends StatelessWidget {
   }
 }
 
-
 class OrderScreen extends StatefulWidget {
   final int maxQuantity;
   const OrderScreen({super.key, this.maxQuantity = 10});
@@ -28,13 +27,14 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   int _quantity = 0;
-  void _increaseQuantity(){
-    if (_quantity < widget.maxQuantity){
+  void _increaseQuantity() {
+    if (_quantity < widget.maxQuantity) {
       setState(() => _quantity++);
     }
   }
-  void _decreaseQuantity(){
-    if (_quantity > 0){
+
+  void _decreaseQuantity() {
+    if (_quantity > 0) {
       setState(() => _quantity--);
     }
   }
@@ -52,11 +52,20 @@ class _OrderScreenState extends State<OrderScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: _increaseQuantity,
+                  
+                  onPressed:  _increaseQuantity,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                    foregroundColor: Colors.black
+                  ),
                   child: const Text('Add'),
                 ),
                 ElevatedButton(
                   onPressed: _decreaseQuantity,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    foregroundColor: Colors.black,
+                  ),
                   child: const Text('Remove'),
                 ),
               ],
