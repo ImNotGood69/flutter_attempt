@@ -52,16 +52,18 @@ class _OrderScreenState extends State<OrderScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  
-                  onPressed:  _increaseQuantity,
+                  onPressed: _quantity < widget.maxQuantity
+                      ? _increaseQuantity
+                      : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple,
-                    foregroundColor: Colors.black
+                    foregroundColor: Colors.black,
                   ),
                   child: const Text('Add'),
                 ),
+                const SizedBox(width: 8),
                 ElevatedButton(
-                  onPressed: _decreaseQuantity,
+                  onPressed: _quantity > 0 ? _decreaseQuantity : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,
                     foregroundColor: Colors.black,
