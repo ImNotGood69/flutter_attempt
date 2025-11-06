@@ -27,6 +27,8 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   int _quantity = 0;
+  // track selected sandwich size: true = Footlong, false = Six-inch
+  bool _isFootlong = true;
   void _increaseQuantity() {
     if (_quantity < widget.maxQuantity) {
       setState(() => _quantity++);
@@ -47,7 +49,25 @@ class _OrderScreenState extends State<OrderScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OrderItemDisplay(_quantity, 'Footlong'),
+            // show currently selected size in the display
+            OrderItemDisplay(_quantity, _isFootlong ? 'Footlong' : 'Six-inch'),
+            const SizedBox(height: 12),
+            // size selector
+            ToggleButtons(
+              isSelected: [_isFootlong, !_isFootlong],
+              onPressed: (index) => setState(() => _isFootlong = index == 0),
+              children: const [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Text('Footlong'),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Text('6-inch'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
