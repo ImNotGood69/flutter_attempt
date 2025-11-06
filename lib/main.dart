@@ -27,8 +27,9 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   int _quantity = 0;
-  // track selected sandwich size: true = Footlong, false = Six-inch
   bool _isFootlong = true;
+  // selected bread
+  BreadType _selectedBread = BreadType.heartyItalian;
   void _increaseQuantity() {
     if (_quantity < widget.maxQuantity) {
       setState(() => _quantity++);
@@ -67,6 +68,20 @@ class _OrderScreenState extends State<OrderScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 12),
+            // bread selector using the enum
+            DropdownButton<BreadType>(
+              value: _selectedBread,
+              onChanged: (BreadType? newValue) {
+                if (newValue == null) return;
+                setState(() => _selectedBread = newValue);
+              },
+              items: BreadType.values.map((b) {
+                return DropdownMenuItem(value: b, child: Text(b.label));
+              }).toList(),
+            ),
+            // optional: show selected bread in text
+            Text('Selected bread: ${_selectedBread.label}'),
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -107,6 +122,24 @@ class OrderItemDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
+  }
+}
+
+// add this enum and a helper extension for display labels
+enum BreadType { heartyItalian, honeyAndOat, wholemeal, garlicAndCheese }
+
+extension BreadTypeLabel on BreadType {
+  String get label {
+    switch (this) {
+      case BreadType.heartyItalian:
+        return 'Hearty Italian';
+      case BreadType.honeyAndOat:
+        return 'Honey & Oat';
+      case BreadType.wholemeal:
+        return 'Wholemeal';
+      case BreadType.garlicAndCheese:
+        return 'Garlic & Cheese';
+    }
   }
 }
 
@@ -235,9 +268,9 @@ class OrderItemDisplay extends StatelessWidget {
 //         // Center is a layout widget. It takes a single child and positions it
 //         // in the middle of the parent.
 //         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text(
+//     );    mainAxisAlignment: MainAxisAlignment.center,
+//   }       children: <Widget>[
+// }           const Text(
 //               'Welcome to my shop!',
 //               style: const TextStyle(
 //                 fontSize: 24,
