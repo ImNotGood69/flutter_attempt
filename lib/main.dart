@@ -1,6 +1,7 @@
 import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/repositories/order_repository.dart';
+import 'package:sandwich_shop/repositories/pricing_repository.dart';
 
 enum BreadType { white, wheat, wholemeal }
 
@@ -33,15 +34,18 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   late final OrderRepository _orderRepository;
+  late final PricingRepository _pricingRepository;
   final TextEditingController _notesController = TextEditingController();
   bool _isFootlong = true;
   bool _isToasted = false;
   BreadType _selectedBreadType = BreadType.white;
+  int _quantity = 0;
 
   @override
   void initState() {
     super.initState();
     _orderRepository = OrderRepository(maxQuantity: widget.maxQuantity);
+    _pricingRepository = PricingRepository(); // footlong=11, sixInch=7
     _notesController.addListener(() {
       setState(() {});
     });
@@ -54,15 +58,19 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   VoidCallback? _getIncreaseCallback() {
-    if (_orderRepository.canIncrement) {
-      return () => setState(_orderRepository.increment);
+    if (_quantity < widget.maxQuantity) {
+      return () {
+        setState(() => _quantity++);
+      };
     }
     return null;
   }
 
   VoidCallback? _getDecreaseCallback() {
-    if (_orderRepository.canDecrement) {
-      return () => setState(_orderRepository.decrement);
+    if (_quantity > 0) {
+      return () {
+        setState(() => _quantity--);
+      };
     }
     return null;
   }
@@ -72,36 +80,28 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void _onBreadTypeSelected(BreadType? value) {
-    if (value != null) {
-      setState(() => _selectedBreadType = value);
-    }
+    if (value != null) setState(() => _selectedBreadType = value);
   }
 
   List<DropdownMenuEntry<BreadType>> _buildDropdownEntries() {
-    List<DropdownMenuEntry<BreadType>> entries = [];
-    for (BreadType bread in BreadType.values) {
-      DropdownMenuEntry<BreadType> newEntry = DropdownMenuEntry<BreadType>(
-        value: bread,
-        label: bread.name,
-      );
-      entries.add(newEntry);
-    }
-    return entries;
+    return BreadType.values
+        .map((b) => DropdownMenuEntry<BreadType>(value: b, label: b.name))
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    String sandwichType = 'footlong';
-    if (!_isFootlong) {
-      sandwichType = 'six-inch';
-    }
+    final sandwichType = _isFootlong ? 'footlong' : 'six-inch';
+    final noteForDisplay = _notesController.text.isEmpty
+        ? 'No notes added.'
+        : _notesController.text;
 
-    String noteForDisplay;
-    if (_notesController.text.isEmpty) {
-      noteForDisplay = 'No notes added.';
-    } else {
-      noteForDisplay = _notesController.text;
-    }
+    // use the local _quantity as source of truth for display and pricing
+    final double total = _pricingRepository.totalPrice(
+      quantity: _quantity,
+      isFootlong: _isFootlong,
+    );
+    final String totalText = _pricingRepository.formatPrice(total);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Sandwich Counter', style: heading1)),
@@ -110,11 +110,14 @@ class _OrderScreenState extends State<OrderScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             OrderItemDisplay(
-              quantity: _orderRepository.quantity,
+              quantity: _quantity,
               itemType: sandwichType,
               breadType: _selectedBreadType,
               orderNote: noteForDisplay,
             ),
+            const SizedBox(height: 12),
+            // reactive total display
+            Text('Total: $totalText', style: normalText),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -130,9 +133,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 const Text('untoasted', style: normalText),
                 Switch(
                   value: _isToasted,
-                  onChanged: (value) {
-                    setState(() => _isToasted = value);
-                  },
+                  onChanged: (v) => setState(() => _isToasted = v),
                 ),
                 const Text('toasted', style: normalText),
               ],
