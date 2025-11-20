@@ -1,16 +1,34 @@
-# flutter_attempt
+# sandwich_shop
 
-A new Flutter project.
+University lab project to learn Flutter — a small interactive sandwich counter app.
 
-## Getting Started
+## Features
+- Display a sandwich order with:
+  - Adjustable quantity (Add / Remove)
+  - Switch between footlong and six-inch sizes
+  - Select bread type (white, wheat, wholemeal)
+  - Add an order note (e.g., "no onions")
+- Maximum quantity enforced by `OrderScreen(maxQuantity: X)`
+- Simple, reusable UI components:
+  - `OrderItemDisplay` (shows quantity, type, bread, note)
+  - `StyledButton` (styled add/remove buttons)
 
-This project is a starting point for a Flutter application.
+## Project structure (relevant files)
+- lib/
+  - main.dart — app entry point, `OrderScreen` state and UI
+  - views/app_styles.dart — styles used by the app (imported as `package:sandwich_shop/views/app_styles.dart`)
+  - repositories/order_repository.dart — small repository used by `OrderScreen`
+- pubspec.yaml — project configuration (name must match `package:` imports)
 
-A few resources to get you started if this is your first Flutter project:
+## Prerequisites
+- Flutter SDK (stable) installed and on PATH
+- Dart SDK (bundled with Flutter)
+- (Optional) Android SDK / emulator or a connected device
+- VS Code (recommended) with the Flutter and Dart extensions
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Install and run (Windows PowerShell)
+1. Clone repository:
+```powershell
+git clone <https://github.com/ImNotGood69/flutter_attempt>
+cd "c:\random revision stuff i cba to put into other drive\Flutter\flutter_attempt"
+```
