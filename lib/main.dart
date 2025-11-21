@@ -131,9 +131,11 @@ class _OrderScreenState extends State<OrderScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('untoasted', style: normalText),
-                Switch(
+                // use Checkbox for the toasted option so there's only one Switch in the UI
+                Checkbox(
                   value: _isToasted,
-                  onChanged: (v) => setState(() => _isToasted = v),
+                  onChanged: (value) =>
+                      setState(() => _isToasted = value ?? false),
                 ),
                 const Text('toasted', style: normalText),
               ],

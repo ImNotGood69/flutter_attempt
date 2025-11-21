@@ -7,24 +7,39 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:sandwich_shop/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const App());
+  testWidgets(
+    'Switch toggles between six-inch and footlong in the order display',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+      await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      // initial state: should show footlong in the order display
+      expect(find.textContaining('footlong'), findsWidgets);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      // find the switch widget that is initially true (size switch)
+      final Finder sizeSwitchFinder = find.byWidgetPredicate(
+        (widget) => widget is Switch && widget.value == true,
+        description: 'Switch with value == true (size switch)',
+      );
+      expect(sizeSwitchFinder, findsWidgets);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+      // verify initial switch value is true (footlong)
+      final Switch sBefore = tester.widget<Switch>(sizeSwitchFinder);
+      expect(sBefore.value, isTrue);
+
+      // toggle the switch
+      await tester.tap(sizeSwitchFinder);
+      await tester.pumpAndSettle();
+
+      // after toggle the order display should show six-inch
+      expect(find.textContaining('six-inch'), findsOneWidget);
+
+      // switch value should now be false
+      final Switch sAfter = tester.widget<Switch>(sizeSwitchFinder);
+      expect(sAfter.value, isFalse);
+    },
+  );
 }
