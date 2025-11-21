@@ -123,7 +123,11 @@ class _OrderScreenState extends State<OrderScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('six-inch', style: normalText),
-                Switch(value: _isFootlong, onChanged: _onSandwichTypeChanged),
+                Switch(
+                  key: const Key('size_switch'),
+                  value: _isFootlong,
+                  onChanged: _onSandwichTypeChanged,
+                ),
                 const Text('footlong', style: normalText),
               ],
             ),
@@ -131,7 +135,7 @@ class _OrderScreenState extends State<OrderScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('untoasted', style: normalText),
-                // use Checkbox for the toasted option so there's only one Switch in the UI
+                // use a Checkbox for the toasted option so there's only one Switch in the UI
                 Checkbox(
                   value: _isToasted,
                   onChanged: (value) =>

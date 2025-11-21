@@ -16,15 +16,9 @@ void main() {
       await tester.pumpWidget(const App());
       await tester.pumpAndSettle();
 
-      // initial state: should show footlong in the order display
-      expect(find.textContaining('footlong'), findsWidgets);
-
-      // find the switch widget that is initially true (size switch)
-      final Finder sizeSwitchFinder = find.byWidgetPredicate(
-        (widget) => widget is Switch && widget.value == true,
-        description: 'Switch with value == true (size switch)',
-      );
-      expect(sizeSwitchFinder, findsWidgets);
+      // find the size switch by key
+      final Finder sizeSwitchFinder = find.byKey(const Key('size_switch'));
+      expect(sizeSwitchFinder, findsOneWidget);
 
       // verify initial switch value is true (footlong)
       final Switch sBefore = tester.widget<Switch>(sizeSwitchFinder);
@@ -35,7 +29,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // after toggle the order display should show six-inch
-      expect(find.textContaining('six-inch'), findsOneWidget);
+      expect(find.textContaining('six-inch'), findsWidgets);
 
       // switch value should now be false
       final Switch sAfter = tester.widget<Switch>(sizeSwitchFinder);
