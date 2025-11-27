@@ -104,11 +104,31 @@ class _OrderScreenState extends State<OrderScreen> {
     final String totalText = _pricingRepository.formatPrice(total);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Sandwich Counter', style: heading1)),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              width: 36,
+              height: 36,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(width: 8),
+            Text('Sandwich Counter', style: heading1),
+          ],
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            // app logo inside the screen as well
+            Image.asset(
+              'assets/images/logo.png',
+              width: 80,
+              height: 80,
+              fit: BoxFit.contain,
+            ),
             OrderItemDisplay(
               quantity: _quantity,
               itemType: sandwichType,
