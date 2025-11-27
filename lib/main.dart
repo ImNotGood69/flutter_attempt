@@ -228,7 +228,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     onPressed: _getDecreaseCallback(),
                     icon: const Icon(Icons.remove),
                   ),
-                  Text('$_quantity', style: heading2),
+                  Text('$_quantity', style: normalText),
                   IconButton(
                     onPressed: _increaseQuantity,
                     icon: const Icon(Icons.add),
@@ -325,43 +325,5 @@ class OrderItemDisplay extends StatelessWidget {
         Text('Note: $orderNote', style: normalText),
       ],
     );
-  }
-}
-
-enum BreadType { white, wheat, wholemeal }
-
-enum SandwichType { veggieDelight, chickenTeriyaki, tunaMelt, meatballMarinara }
-
-/// Simple model describing a sandwich selection.
-class Sandwich {
-  final SandwichType type;
-  final bool isFootlong;
-  final BreadType breadType;
-
-  Sandwich({
-    required this.type,
-    required this.breadType,
-    this.isFootlong = true,
-  });
-
-  /// Human readable name for the sandwich type.
-  String get name {
-    switch (type) {
-      case SandwichType.veggieDelight:
-        return 'Veggie Delight';
-      case SandwichType.chickenTeriyaki:
-        return 'Chicken Teriyaki';
-      case SandwichType.tunaMelt:
-        return 'Tuna Melt';
-      case SandwichType.meatballMarinara:
-        return 'Meatball Marinara';
-    }
-  }
-
-  /// Asset image path for this sandwich (adjust filenames as needed in assets/images).
-  String get image {
-    // Use a simple naming convention: assets/images/<type_name>.png
-    // If you have size-specific images, extend this logic.
-    return 'assets/images/${type.name}.png';
   }
 }
