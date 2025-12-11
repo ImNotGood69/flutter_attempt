@@ -201,13 +201,13 @@ class _OrderScreenState extends State<OrderScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Six-inch', style: normalText),
+                  const Text('six-inch', style: normalText),
                   Switch(
                     key: const Key('size_switch'),
                     value: _isFootlong,
                     onChanged: _onSizeChanged,
                   ),
-                  const Text('Footlong', style: normalText),
+                  const Text('footlong', style: normalText),
                 ],
               ),
               const SizedBox(height: 20),

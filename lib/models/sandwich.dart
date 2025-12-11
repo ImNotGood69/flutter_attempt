@@ -1,18 +1,13 @@
 enum BreadType { white, wheat, wholemeal }
 
-enum SandwichType {
-  veggieDelight,
-  chickenTeriyaki,
-  tunaMelt,
-  meatballMarinara,
-}
+enum SandwichType { veggieDelight, chickenTeriyaki, tunaMelt, meatballMarinara }
 
 class Sandwich {
   final SandwichType type;
   final bool isFootlong;
   final BreadType breadType;
 
-  Sandwich({
+  const Sandwich({
     required this.type,
     required this.isFootlong,
     required this.breadType,
@@ -41,4 +36,16 @@ class Sandwich {
     }
     return 'assets/images/${typeString}_$sizeString.png';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Sandwich &&
+        other.type == type &&
+        other.isFootlong == isFootlong &&
+        other.breadType == breadType;
+  }
+
+  @override
+  int get hashCode => Object.hash(type, isFootlong, breadType);
 }

@@ -33,4 +33,9 @@ class PricingRepository {
       sixInchPrice: sixInchPrice ?? _sixInchPrice,
     );
   }
+
+  /// Compatibility helper matching older call sites.
+  double calculatePrice({required int quantity, required bool isFootlong}) {
+    return totalPrice(quantity: quantity, isFootlong: isFootlong);
+  }
 }
