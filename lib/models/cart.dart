@@ -54,5 +54,7 @@ class Cart extends ChangeNotifier {
   bool get isEmpty => _items.isEmpty;
   int get length => _items.length;
 
+  int get countOfItems => totalQuantity();
+
   int getQuantity(Sandwich sandwich) => _items[sandwich] ?? 0;
 }
